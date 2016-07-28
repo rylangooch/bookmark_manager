@@ -6,6 +6,7 @@ require_relative 'models/data_mapper_setup'
 class BookmarkManager < Sinatra::Base
   enable :sessions
   set :sessions_secret, 'super secret'
+  DataMapper::Model.raise_on_save_failure = true
 
   get '/' do
     redirect '/links/new'
@@ -22,8 +23,7 @@ class BookmarkManager < Sinatra::Base
   end
 
   post '/user' do
-    user = User.create(email: params[:email], password: params[:password], confirm_password: params[:confirm_password])
-    user.save
+    user = User.create(email: params[:email], password: params[:password], password_confirmation: params[:password_confirmation])
     session[:user_id] = user.id
     redirect '/links'
   end
