@@ -1,10 +1,9 @@
 feature 'creating new user' do
   scenario 'storing a user profile' do
-    visit '/user/new'
-    fill_in 'name', :with => 'Aga'
-    fill_in 'email', :with => 'aga@aga.com'
-    fill_in 'password', :with => 'aga'
-    click_button 'Save user'
-    expect(page).to have_content 'Welcome, Aga'
+    expect { sign_up }.to change(User, :count).by(1)
+    p page
+    expect(page).to have_content 'Welcome, aga@aga.com'
+
+    expect(User.first.email).to eq('aga@aga.com')
   end
 end
