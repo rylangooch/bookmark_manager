@@ -2,10 +2,12 @@ require 'bcrypt'
 require 'dm-validations'
 
 class User
-  attr_reader :password
-  attr_accessor :password_confirmation
+
 
 include DataMapper::Resource
+
+attr_reader :password
+attr_accessor :password_confirmation
 
 validates_confirmation_of :password
 
