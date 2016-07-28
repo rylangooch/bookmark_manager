@@ -7,15 +7,17 @@ feature 'creating new user' do
 end
 
 feature 'user sign up' do
-#   scenario 'user enters mismatching passwords' do
-#     expect { register(password_confirmation: 'wrong') }.not_to change(User, :count)
-#   end
+  scenario 'user enters mismatching passwords' do
+    expect { register(password_confirmation: 'wrong') }.not_to change(User, :count)
+    expect(current_path).to eq('/user')
+    expect(page).to have_content('Passwords do not match')
+  end
 
   def register(email: 'user@user.com', password: 'user', password_confirmation: 'user')
     visit '/user/new'
     fill_in 'email', :with => email
     fill_in 'password', :with => password
-    fill_in 'password_confirmation', :with => password
+    fill_in 'password_confirmation', :with => password_confirmation
     click_button 'Save user'
   end
 end
