@@ -13,11 +13,14 @@ feature 'user sign up' do
     expect(page).to have_content('Passwords do not match')
   end
 
-  scenario 'user enters invalid email address' do
-     expect { register(email: 'user@com') }.not_to change(User, :count)
-     expect(current_path).to eq('/user/new')
-     expect(page).to have_content('Invalid email address entered. Please enter valid address')
+  scenario 'user registers with no email address' do
+     expect { register(email: nil) }.not_to change(User, :count)
    end
+
+   scenario 'user enters invalid email address' do
+      expect { register(email: 'usercom') }.not_to change(User, :count)
+      # expect(current_path).to eq('/user/new')
+    end
 
   def register(email: 'user@user.com', password: 'user', password_confirmation: 'user')
     visit '/user/new'
